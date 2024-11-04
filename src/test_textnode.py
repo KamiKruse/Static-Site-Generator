@@ -10,31 +10,24 @@ class TestTextNode(unittest.TestCase):
 
     def test_url(self):
         url = "https://www.google.com"
-        node3 = TextNode("Sameple", TextType.ITALIC, url)
-        self.assertEqual(node3.url, url)
+        node = TextNode("Sample", TextType.ITALIC, url)
+        self.assertEqual(node.url, url)
 
     def test_url_none(self):
-        node4 = TextNode("Sample", TextType.ITALIC )
-        self.assertIsNone(node4.url)
+        node = TextNode("Sample", TextType.ITALIC )
+        self.assertIsNone(node.url)
 
     def test_type(self):
-        # node5 = TextNode("Sample", TextType.CODE)
-        # self.assertEqual(node5.text_type, TextType.CODE)
-        # self.assertEqual(node5.text_type.value, 'code')
-        # self.assertIsInstance(node5.text_type, TextType)
         node = TextNode("Sample", TextType.CODE)
+        self.assertIs(node.text_type, TextType.CODE)
     
-    # Test that we get back the exact same enum object
-        self.assertEqual(node.text_type, TextType.CODE)
-    
-    # Test that the enum value is 'code'
-        self.assertEqual(node.text_type.value, 'code')
-    
-    # Test that the enum object is the correct type
-        self.assertIsInstance(node.text_type, TextType)
+    def test_values(self):
+        node = TextNode("Sample", TextType.CODE)
+        self.assertEqual(node.text_type.value, "code")
 
-
-
+    def test_invalid_type(self):
+        with self.assertRaises(ValueError):
+            TextNode("sample", "code")
 
 if __name__ == "main":
     unittest.main()
