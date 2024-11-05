@@ -9,13 +9,7 @@ class TextType(Enum):
     IMAGES = "images"
 
 class TextNode:
-    def __init__(self, text, text_type: str, url=None):
-        # try:
-        #     self.text = text
-        #     self.text_type = TextType(text_type).value
-        #     self.url = url
-        # except ValueError:
-        #     raise ValueError(f"Invalid text type: {text_type}. Must be one of {[t.value for t in TextType]}")
+    def __init__(self, text, text_type: str, url=None): 
         if not isinstance(text_type, TextType):
             raise ValueError("text type must be a TextType enum")
         self.text = text
