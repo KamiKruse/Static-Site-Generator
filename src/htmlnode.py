@@ -1,3 +1,5 @@
+from textnode import TextNode
+
 class HTMLNode:
     def __init__(self, tag = None, value = None, children : list['HTMLNode'] | None = None, props = None):
         self.tag = tag
@@ -15,13 +17,13 @@ class HTMLNode:
         for key, value in self.props.items():
             props_list.append(f'{key}="{value}"')
         concatted = " ".join(props_list)
-        return  " " + concatted
+        return " " + concatted
     
     def __repr__(self) -> str:
         return f"HTMLNode({self.tag}{self.value}{self.children}{self.props})"
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag=None, value=None, children : list['HTMLNode'] | None = None, props=None):
+    def __init__(self, tag, value, props=None):
         all_props = {}
         if props is not None:
             all_props.update(props)
@@ -38,5 +40,14 @@ class LeafNode(HTMLNode):
         return f"<{self.tag}>{self.value}</{self.tag}>"
 
 class ParentNode(HTMLNode):
-    def __init__(self, tag=None, value=None, children: list[HTMLNode] | None = None, props=None):
-        super().__init__(tag, value, children, props)
+    def __init__(self, tag, children:  list['HTMLNode'] | None, props=None):
+        if children is None or len(children) == 0:
+            raise ValueError("No more children")
+        super().__init__(tag, props, children = children)
+    
+    def to_html(self):
+        if not self.tag:
+            raise ValueError("Parent nodes must have a tag")
+        results = " ".join(child.to_html() for child in self.children)
+        return f"<{self.tag}>{results}</{self.tag}>"
+

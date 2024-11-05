@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHtmlNode(unittest.TestCase):
     def test_one(self):
@@ -59,5 +59,41 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode(tag=None, value='This is supposed to be a link')
         self.assertEqual(node.to_html(), "This is supposed to be a link")
    
+class TestParentNode(unittest.TestCase):
+    def test_one(self):
+        node = ParentNode('p', [
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+    ])
+        assert node.to_html() == "<p><b>Bold text</b> Normal text <i>italic text</i> Normal text</p>"
+    
+    def test_nested_parent_node(self):
+        parent = ParentNode(
+            "div",
+            [
+                ParentNode(
+                    "p",
+                    [
+                        LeafNode(None, "Paragraph text")
+                    ],
+                )
+            ],
+        )
+        assert parent.to_html() == "<div><p>Paragraph text</p></div>"
+    
+    def test_parent_node_no_tag(self):
+        with self.assertRaises(ValueError) as e:
+            parent = ParentNode(None, [LeafNode("b", "Bold text")])
+            parent.to_html()
+        self.assertEqual(str(e.exception), "Parent nodes must have a tag")
+
+    def test_parent_node_no_children(self):
+        with self.assertRaises(ValueError) as e:
+            parent = ParentNode("p", [])
+            parent.to_html()
+        self.assertEqual(str(e.exception), "No more children")
+        
 if __name__ == "main":
     unittest.main()
