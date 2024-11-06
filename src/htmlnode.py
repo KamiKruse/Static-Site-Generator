@@ -1,5 +1,3 @@
-from textnode import TextNode
-
 class HTMLNode:
     def __init__(self, tag = None, value = None, children : list['HTMLNode'] | None = None, props = None):
         self.tag = tag
