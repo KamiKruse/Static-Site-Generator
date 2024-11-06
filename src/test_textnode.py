@@ -1,6 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
+from htmlnode import LeafNode
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -28,6 +29,17 @@ class TestTextNode(unittest.TestCase):
     def test_invalid_type(self):
         with self.assertRaises(ValueError):
             TextNode("sample", "code")
+
+    def test_text_to_leaf_normal(self):
+        def test_text_to_leaf_normal(self):
+            node = TextNode("Sample", TextType.TEXT)
+            expected_node = LeafNode(tag=None, value="Sample")
+            actual_node = node.text_node_to_html_node()
+            self.assertEqual(actual_node.tag, expected_node.tag)
+            self.assertEqual(actual_node.value, expected_node.value)
+            self.assertEqual(actual_node.props, expected_node.props)
+        
+        
 
 if __name__ == "main":
     unittest.main()
