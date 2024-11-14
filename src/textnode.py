@@ -49,6 +49,8 @@ class TextNode:
                 })
             case _:
                 raise Exception("TextNode is none of these types")
+            
+            
 
    
 
