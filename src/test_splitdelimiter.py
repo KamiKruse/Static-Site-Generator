@@ -42,9 +42,7 @@ class TestSplitDelimiter(unittest.TestCase):
     def test_split_nodes_delimiter_empty_string(self):
         node = TextNode("", TextType.TEXT)
         nodes = split_nodes_delimiter([node], "`", TextType.CODE)
-        self.assertEqual(len(nodes), 1)
-        self.assertEqual(nodes[0].text, "")
-        self.assertEqual(nodes[0].text_type, TextType.TEXT)
+        self.assertEqual(len(nodes), 0)
 
     def test_split_nodes_delimiter_non_text_type(self):
         node = TextNode("This is `code` text", TextType.BOLD)
@@ -72,6 +70,36 @@ class TestSplitDelimiter(unittest.TestCase):
         self.assertEqual(nodes[1].text_type, TextType.TEXT)
         self.assertEqual(nodes[2].text, "code2")
         self.assertEqual(nodes[2].text_type, TextType.CODE)
+
+    def test_split_nodes_delimiter_bold(self):
+        node = TextNode("Hello **world** goodbye", TextType.TEXT)
+        nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
+        self.assertEqual(len(nodes), 3)
+        self.assertEqual(nodes[0].text, "Hello ")
+        self.assertEqual(nodes[0].text_type, TextType.TEXT)
+        self.assertEqual(nodes[1].text, "world")
+        self.assertEqual(nodes[1].text_type, TextType.BOLD)
+        self.assertEqual(nodes[2].text, " goodbye")
+        self.assertEqual(nodes[2].text_type, TextType.TEXT)
+
+    def test_split_nodes_delimiter_italic(self):
+        node = TextNode("Hello *world* goodbye", TextType.TEXT)
+        nodes = split_nodes_delimiter([node], "*", TextType.ITALIC)
+        self.assertEqual(len(nodes), 3)
+        self.assertEqual(nodes[0].text, "Hello ")
+        self.assertEqual(nodes[0].text_type, TextType.TEXT)
+        self.assertEqual(nodes[1].text, "world")
+        self.assertEqual(nodes[1].text_type, TextType.ITALIC)
+        self.assertEqual(nodes[2].text, " goodbye")
+        self.assertEqual(nodes[2].text_type, TextType.TEXT)
+
+    def test_split_nodes_empty_delimiter(self):
+        node = TextNode("Hello world goodbye", TextType.TEXT)
+        nodes = split_nodes_delimiter([node], "", TextType.TEXT)
+        print(len(nodes))
+        self.assertEqual(len(nodes), 1)
+        self.assertEqual(nodes[0].text, "Hello world goodbye")
+        self.assertEqual(nodes[0].text_type, TextType.TEXT)
 
 if __name__ == "__main__":
     unittest.main()

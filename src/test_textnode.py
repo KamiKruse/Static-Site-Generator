@@ -31,7 +31,6 @@ class TestTextNode(unittest.TestCase):
             TextNode("sample", "code")
 
     def test_text_to_leaf_normal(self):
-        def test_text_to_leaf_normal(self):
             node = TextNode("Sample", TextType.TEXT)
             expected_node = LeafNode(tag=None, value="Sample")
             actual_node = node.text_node_to_html_node()

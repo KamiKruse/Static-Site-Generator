@@ -15,7 +15,8 @@ class TextNode:
             raise ValueError("text type must be a TextType enum")
         self.text = text
         self._text_type = text_type
-        self.url = url
+        if url is not None:
+            self.url = url
     
     @property
     def text_type(self):
@@ -27,7 +28,9 @@ class TextNode:
         return (self.text == other.text and self.text_type == other.text_type and self.url == other.url)
 
     def __repr__(self):
-        return f'TextNode("{self.text}", {self.text_type}, "{self.url}")'
+        if hasattr(self, 'url'):  # This checks if the url attribute exists
+            return f'TextNode("{self.text}", {self.text_type}, "{self.url}")'
+        return f'TextNode("{self.text}", {self.text_type})'
     
 
     def text_node_to_html_node(self):
