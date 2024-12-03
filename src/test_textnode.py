@@ -15,8 +15,8 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node.url, url)
 
     def test_url_none(self):
-        node = TextNode("Sample", TextType.ITALIC )
-        self.assertIsNone(node.url)
+        node = TextNode("Sample", TextType.ITALIC)
+        self.assertFalse(hasattr(node, 'url'))
 
     def test_type(self):
         node = TextNode("Sample", TextType.CODE)

@@ -75,3 +75,6 @@ def split_nodes_links(old_nodes):
 # l_split = split_nodes_image(node2)
 # lk_split = split_nodes_image(l_split)
 # print(l_split)
+# node = [TextNode("This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)",TextType.TEXT)]
+# nodes = split_nodes_image(node)
+# print(nodes)

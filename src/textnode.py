@@ -25,7 +25,8 @@ class TextNode:
     def __eq__(self, other):
         if not isinstance(other, TextNode):
             return False
-        return (self.text == other.text and self.text_type == other.text_type and self.url == other.url)
+        url_equals = (hasattr(self, 'url') and hasattr(other, 'url') and self.url == other.url) or (not hasattr(self, 'url') and not hasattr(other, 'url'))
+        return (self.text == other.text and self.text_type == other.text_type and url_equals)
 
     def __repr__(self):
         if hasattr(self, 'url'):  # This checks if the url attribute exists

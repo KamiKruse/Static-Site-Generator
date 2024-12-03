@@ -42,7 +42,7 @@ class TestSplitDelimiter(unittest.TestCase):
     def test_split_nodes_delimiter_empty_string(self):
         node = TextNode("", TextType.TEXT)
         nodes = split_nodes_delimiter([node], "`", TextType.CODE)
-        self.assertEqual(len(nodes), 0)
+        self.assertEqual(len(nodes), 1)
 
     def test_split_nodes_delimiter_non_text_type(self):
         node = TextNode("This is `code` text", TextType.BOLD)

@@ -13,9 +13,10 @@ def text_to_textnodes(text):
     return final_split
 
 
-test_text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+# test_text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 # test_text1 = "This is *italic* with a **text** word and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 # test_text2 = "This is a [link](https://boot.dev) with an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a **text** word and a *italic*"
 # test_text3 = ""
 # test_text4 = "This is a [link](https://boot.dev) with an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a **text** word and a *italic*"
-print(text_to_textnodes(test_text))
+# print(text_to_textnodes(test_text4))
+# print(len(text_to_textnodes(test_text4)))

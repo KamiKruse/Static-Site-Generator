@@ -46,6 +46,6 @@ def extract_markdown_links(text):
     # # If markdown links found, return the matches
     # return matches
 
-# test_text = " and a ![image](https://test.com)"
+# test_text = "and a ![image](https://test.com)"
 # print(extract_markdown_images(test_text))
 
