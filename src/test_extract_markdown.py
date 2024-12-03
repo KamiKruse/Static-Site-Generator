@@ -1,7 +1,7 @@
 import unittest
 from extract_markdown import extract_markdown_images, extract_markdown_links
 
-class TestExtracyMarkdown(unittest.TestCase):
+class TestExtractMarkdown(unittest.TestCase):
     def test_basic_images(self):
         text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
         matches = extract_markdown_images(text)
@@ -17,22 +17,22 @@ class TestExtracyMarkdown(unittest.TestCase):
     def test_empty_string_images(self):
             text = ""
             matches = extract_markdown_images(text)
-            self.assertEqual(matches, [])
+            self.assertEqual(matches, "")
 
     def test_empty_string_links(self):
             text = ""
             matches = extract_markdown_links(text)
-            self.assertEqual(matches, [])
+            self.assertEqual(matches, "")
     
     def test_no_images(self):
         text = "This is text with a  and "
         matches = extract_markdown_images(text)
-        self.assertEqual(matches, [])
+        self.assertEqual(matches, "This is text with a  and ")
 
     def test_no_links(self):
         text = "This is text with a link  and "
         matches = extract_markdown_links(text)
-        self.assertEqual(matches, [])
+        self.assertEqual(matches, "This is text with a link  and ")
     
     def test_incorrect_images(self):
         text = "This is text with a rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"

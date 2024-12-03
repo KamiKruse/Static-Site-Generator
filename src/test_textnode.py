@@ -15,8 +15,8 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node.url, url)
 
     def test_url_none(self):
-        node = TextNode("Sample", TextType.ITALIC )
-        self.assertIsNone(node.url)
+        node = TextNode("Sample", TextType.ITALIC)
+        self.assertFalse(hasattr(node, 'url'))
 
     def test_type(self):
         node = TextNode("Sample", TextType.CODE)
@@ -31,7 +31,6 @@ class TestTextNode(unittest.TestCase):
             TextNode("sample", "code")
 
     def test_text_to_leaf_normal(self):
-        def test_text_to_leaf_normal(self):
             node = TextNode("Sample", TextType.TEXT)
             expected_node = LeafNode(tag=None, value="Sample")
             actual_node = node.text_node_to_html_node()
