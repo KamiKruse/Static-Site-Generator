@@ -21,25 +21,3 @@ def markdown_to_blocks(markdown):
         groups.append("\n".join(current_group))
 
     return groups
-
-
-
-
-text2 = """## Block One
-
-
-This is block two with consecutive blank lines above.
-"""
-text3 = """A single block of text without any blank lines separating it.
-It should all be treated as one block despite the lack of newlines.
-"""
-text4 = """### Heading
-
-
-
-Paragraph text.
-
-
-- Item 1
-- Item 2
-"""
