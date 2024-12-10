@@ -109,11 +109,3 @@ def block_to_block_type(block):
                 
     return "paragraph"
 
-# text = """# This is a heading
-
-#         This is a paragraph of text. It has some **bold** and *italic* words inside of it.
-
-#         1. This is the first list item in a list block
-#         2. This is a list item
-#         3. This is another list item
-#         """
