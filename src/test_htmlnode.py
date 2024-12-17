@@ -29,6 +29,7 @@ class TestHtmlNode(unittest.TestCase):
              })
          result_parts = set(node.props_to_html().strip().split())
          expected_parts = set(['for="password"', 'id="password"'])
+        
          self.assertEqual(result_parts, expected_parts)
 
 class TestLeafNode(unittest.TestCase):  
