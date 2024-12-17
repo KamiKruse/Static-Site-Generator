@@ -1,3 +1,6 @@
+from htmlnode import ParentNode
+from text_to_textnodes import text_to_textnodes
+from textnode import TextNode, TextType
 
 def markdown_to_blocks(markdown):
     # Split text into lines
@@ -78,7 +81,7 @@ def block_to_block_type(block):
     if block[0] == "`":
         if block[1:3] != "``":
             return "Invalid markdown"
-        if block[-4:-1] != "```":
+        if block[-3:] != "```":
             return "Invalid markdown"
         return "code"
 
@@ -109,3 +112,99 @@ def block_to_block_type(block):
                 
     return "paragraph"
 
+def markdown_to_html_node(markdown):
+    blocks = markdown_to_blocks(markdown)
+    children = []
+    for block in blocks:
+        html_node = block_to_html_node(block)
+        children.append(html_node)
+    return ParentNode("div", children, None)
+
+def block_to_html_node(block):
+    block_type = block_to_block_type(block)
+    if block_type == "paragraph":
+        return paragraph_to_html_node(block)
+    if block_type == "code":
+        return code_to_html_code(block)
+    if block_type == "ordered list":
+        return olist_to_html_code(block)
+    if block_type == "unordered list":
+        return ulist_to_html_code(block)
+    if block_type == "quote":
+        return quote_to_html_code(block)
+    if block_type == "h1" or block_type == "h2" or block_type == "h3" or block_type == "h4" or block_type == "h5" or block_type == "h6":
+        return heading_to_html_code(block_type, block)
+    if block_type == "Invalid markdown":
+        raise ValueError("Invalid block type")
+    
+def text_to_children(text):
+    text_nodes = text_to_textnodes(text)
+    children = []
+    for text_node in text_nodes:
+        html_node = TextNode.text_node_to_html_node(text_node)
+        children.append(html_node)
+    return children
+
+def forCode_text_to_children(text):
+    text_nodes = [TextNode(text, TextType.TEXT, None)]
+    children = []
+    for text_node in text_nodes:
+        html_node = TextNode.text_node_to_html_node(text_node)
+        children.append(html_node)
+    return children
+
+def paragraph_to_html_node(block):
+    lines = block.split("\n")
+    paragraph = " ".join(lines)
+    children = text_to_children(paragraph)
+    return ParentNode("p", children)
+
+def code_to_html_code(block):
+    text = block[3:-3]
+    children = forCode_text_to_children(text)
+    code = ParentNode("code", children)
+    return ParentNode("pre", [code])
+
+def olist_to_html_code(block):
+    items = block.split("\n")
+    html_items = []
+    for item in items:
+        text = item[3:]
+        children = text_to_children(text)
+        html_items.append(ParentNode("li", children))
+    return ParentNode("ol", html_items)
+
+def ulist_to_html_code(block):
+    items = block.split("\n")
+    html_items = []
+    for item in items:
+        text = item[2:]
+        children = text_to_children(text)
+        html_items.append(ParentNode("li", children))
+    return ParentNode("ul", html_items)
+
+def quote_to_html_code(block):
+    lines = block.split("\n")
+    new_lines = []
+    for line in lines:
+        text = line[1:]
+        new_lines.append(text)
+    content = " ".join(new_lines)
+    children = text_to_children(content)
+    return ParentNode("blockquote", children)
+       
+
+def heading_to_html_code(block_type, block):
+    text = block.lstrip("#").strip()
+    children = text_to_children(text)
+    return ParentNode(f"{block_type}", children)
+
+
+# test_list_heading = """# This is a heading
+
+#                 ## Another h2 heading
+
+#                 #### Another h3 heading
+#         """
+# # val = markdown_to_blocks(test_list_heading)
+# print(markdown_to_html_node(test_list_heading))
