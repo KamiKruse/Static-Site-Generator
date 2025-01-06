@@ -38,7 +38,7 @@ def split_nodes_links(old_nodes):
     split_nodes = [] 
     for node in old_nodes:
         current_text = node.text
-        current_type = node.text_type
+        current_type = node.text_type 
         if hasattr(node, 'url'):
            current_url = node.url
         if current_text == "":
