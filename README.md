@@ -25,7 +25,7 @@ A Python-based basic static site generator that converts Markdown files to style
 
 ## Usage
 
-1. Place your Markdown content files in the `content` directory
+1. This generator already has test content in the `content` directory. If you want to place your markdown with the given css, name your markdown to `index.md`.
 2. Run the generator by running
     ```bash
     ./main.sh
