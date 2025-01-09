@@ -29,7 +29,7 @@ class TextNode:
         return (self.text == other.text and self.text_type == other.text_type and url_equals)
 
     def __repr__(self):
-        if hasattr(self, 'url'):  # This checks if the url attribute exists
+        if hasattr(self, 'url'):
             return f'TextNode("{self.text}", {self.text_type}, "{self.url}")'
         return f'TextNode("{self.text}", {self.text_type})'
     

@@ -4,13 +4,14 @@ from textnode import TextNode, TextType
 
 def markdown_to_blocks(markdown):
     # Split text into lines
-    lines = markdown.splitlines()
+    lines = markdown.replace('\r\n', '\n').splitlines()
 
     # Group lines based on empty line breaks
     groups = []
     current_group = []
 
     for line in lines:
+        line = line.strip('\ufeff').strip('\u200b')
         stripped_line = line.strip()
         if stripped_line:  # If the line is not empty
             current_group.append(stripped_line)
@@ -34,6 +35,9 @@ def block_passing(groups):
     
 
 def block_to_block_type(block):
+    if block.startswith('**') or block.startswith('![') or block.startswith('['):
+        return "paragraph"
+    
     if block[0] == '#':
         count = 0
         first_space = block.find(" ")
@@ -78,12 +82,13 @@ def block_to_block_type(block):
                     return "Invalid markdown"
         return "unordered list"
     
-    if block[0] == "`":
-        if block[1:3] != "``":
-            return "Invalid markdown"
-        if block[-3:] != "```":
-            return "Invalid markdown"
-        return "code"
+    if block.startswith("```"):
+        if block.count("\n") == 0 and block.endswith("```"):
+            return "code"
+        lines = block.split("\n")
+        if len(lines) >= 2 and lines[-1].strip() == "```":
+            return "code"
+        return "Invalid markdown"
 
     if block[0] == ">":
         return "quote"
@@ -160,8 +165,9 @@ def paragraph_to_html_node(block):
     return ParentNode("p", children)
 
 def code_to_html_code(block):
-    text = block[3:-3]
-    children = forCode_text_to_children(text)
+    text = block[3:-3].strip()
+    new_text = ' '.join(text.split())
+    children = forCode_text_to_children(new_text)
     code = ParentNode("code", children)
     return ParentNode("pre", [code])
 
@@ -187,7 +193,7 @@ def quote_to_html_code(block):
     lines = block.split("\n")
     new_lines = []
     for line in lines:
-        text = line[1:]
+        text = line[1:].strip()
         new_lines.append(text)
     content = " ".join(new_lines)
     children = text_to_children(content)
@@ -198,13 +204,3 @@ def heading_to_html_code(block_type, block):
     text = block.lstrip("#").strip()
     children = text_to_children(text)
     return ParentNode(f"{block_type}", children)
-
-
-# test_list_heading = """# This is a heading
-
-#                 ## Another h2 heading
-
-#                 #### Another h3 heading
-#         """
-# # val = markdown_to_blocks(test_list_heading)
-# print(markdown_to_html_node(test_list_heading))

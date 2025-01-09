@@ -10,8 +10,6 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         current_url = None
         if hasattr(node, 'url'):
            current_url = node.url
-        # if current_text == "":
-        #     continue
         if current_type == TextType.TEXT and current_text != "": 
             start = 0
             while True:

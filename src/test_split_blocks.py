@@ -283,11 +283,15 @@ class TestBlockTypes(unittest.TestCase):
 class TestConvertNodes(unittest.TestCase):
     def test_code_markdowns(self):
         md = """
-                ```This is another paragraph with *italic* text and `code` here```
+                ```
+                func main(){
+                    fmt.Println("Hello, World!")
+                }
+                ```
             """
         node = markdown_to_html_node(md)
         html = node.to_html()
-        self.assertEqual(html, "<div><pre><code>This is another paragraph with *italic* text and `code` here</code></pre></div>" )
+        self.assertEqual(html, "<div><pre><code>func main(){ fmt.Println(\"Hello, World!\") }</code></pre></div>" )
 
     def test_ol_to_html(self):
         md = """
@@ -311,9 +315,9 @@ class TestConvertNodes(unittest.TestCase):
 
     def test_blockquote_to_html(self):
         md = """
-                >This is an `ordered` list
-                >with items
-                >and more items
+                > This is an `ordered` list
+                > with items
+                > and more items
             """
         node = markdown_to_html_node(md)
         html = node.to_html()
