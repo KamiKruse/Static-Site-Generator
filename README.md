@@ -1,4 +1,4 @@
-# Static Markdown Site Generator
+# Static Site Generator
 
 A Python-based basic static site generator that converts Markdown files to styled HTML pages.
 
